@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <title>มินิเกมคณิต ม.1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Kanit', sans-serif; margin: 0; padding: 0;
+      background: linear-gradient(to bottom right, #fce4ec, #e3f2fd);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; overflow: hidden;
+    }
+    .screen {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 20px; box-sizing: border-box; transition: opacity 0.5s ease;
+    }
+    .hidden { opacity: 0; pointer-events: none; display: none !important; }
+    h1 { font-size: 2rem; color: #ec407a; margin-bottom: 20px; text-align: center; }
+    button {
+      font-size: 1.2rem; padding: 12px 28px; margin: 10px; border: none; border-radius: 40px;
+      background: linear-gradient(to right, #f8bbd0, #90caf9); color: #fff; cursor: pointer;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.15); transition: transform 0.2s;
+    }
+    button:active { transform: scale(0.95); }
+    .game-container {
+      background: rgba(255,255,255,0.95); border-radius: 30px; padding: 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 600px;
+    }
+    input[type="text"] {
+      font-size: 1.5rem; padding: 10px; border: 2px solid #ccc; border-radius: 20px;
+      width: 70%; text-align: center; outline: none;
+    }
+    input:focus { border-color: #ec407a; }
+    /* Mobile Adjustments */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .game-container { padding: 15px; width: 95%; }
+      button { font-size: 1rem; padding: 10px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="intro" class="screen">
+  <h1>🎀 มินิเกมคณิต ม.1 🎀</h1>
+  <p style="color:#666">ฝึกทักษะพื้นฐาน พีชคณิต และสมการ</p>
+  <button onclick="showScreen('mathInfo')">💡 วิธีเล่น</button>
+  <button onclick="showScreen('mode')" style="background:#ec407a;">🎮 เริ่มเกม</button>
+</div>
+
+<div id="mathInfo" class="screen hidden">
+  <div class="game-container">
+    <h2 style="color:#ec407a">กติกาการเล่น</h2>
+    <ul style="text-align: left; line-height: 1.6; color:#555;">
+      <li>ตอบคำถามให้ถูกต้องภายในเวลา</li>
+      <li>มีทั้งเรื่องเลขยกกำลัง, สมการ, และการคำนวณ</li>
+      <li>ระดับยากจะเวลาน้อยลง</li>
+    </ul>
+    <button onclick="showScreen('mode')">เข้าใจแล้ว ➤</button>
+  </div>
+</div>
+
+<div id="mode" class="screen hidden">
+  <div class="game-container">
+    <h2>เลือกระดับความยาก</h2>
+    <button onclick="startGame('easy')">🟢 ง่าย (20 วิ)</button><br>
+    <button onclick="startGame('medium')">🟡 ปานกลาง (15 วิ)</button><br>
+    <button onclick="startGame('hard')">🔴 ยาก (12 วิ)</button>
+  </div>
+</div>
+
+<div id="game" class="screen hidden">
+  <div class="game-container">
+    <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-weight:bold; color:#777;">
+      <span>⏰ <span id="time">20</span> วิ</span>
+      <span>⭐ <span id="score">0</span> คะแนน</span>
+    </div>
+    <div id="question" style="font-size:2.5rem; margin:30px 0; color:#333; font-weight:bold;">?</div>
+    <input type="text" id="answer" placeholder="คำตอบ" inputmode="decimal" />
+    <br><br>
+    <button onclick="checkAnswer()" style="width:100%">ส่งคำตอบ</button>
+  </div>
+</div>
+
+<div id="result" class="screen hidden">
+  <div class="game-container">
+    <h1>🎉 จบเกม!</h1>
+    <p style="font-size:1.5rem;">คะแนนของคุณ: <span id="finalScore" style="color:#ec407a; font-weight:bold;"></span></p>
+    <button onclick="location.reload()">🔄 เล่นใหม่</button>
+  </div>
+</div>
+
+<script>
+  let score = 0, currentQ = 0, timer, timeLeft, correctAnswer;
+  
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+  }
+
+  function startGame(mode) {
+    score = 0; currentQ = 0;
+    timeLeft = mode === 'easy' ? 20 : mode === 'medium' ? 15 : 12;
+    showScreen('game');
+    nextQuestion(mode);
+  }
+
+  function nextQuestion(mode) {
+    if (currentQ >= 10) { endGame(); return; }
+    currentQ++;
+    document.getElementById('answer').value = '';
+    document.getElementById('answer').focus();
+    
+    // สร้างโจทย์
+    let a = Math.floor(Math.random()*12)+2;
+    let b = Math.floor(Math.random()*12)+2;
+    let op = Math.random();
+    
+    if(op < 0.33) { // บวก
+      correctAnswer = a + b;
+      document.getElementById('question').textContent = `${a} + ${b} = ?`;
+    } else if(op < 0.66) { // คูณ
+      correctAnswer = a * b;
+      document.getElementById('question').textContent = `${a} × ${b} = ?`;
+    } else { // สมการง่ายๆ x + a = b
+      let x = Math.floor(Math.random()*10)+1;
+      let total = x + a;
+      correctAnswer = x;
+      document.getElementById('question').textContent = `x + ${a} = ${total}`;
+    }
+
+    // เริ่มจับเวลา
+    clearInterval(timer);
+    document.getElementById('time').textContent = timeLeft;
+    let timeNow = timeLeft;
+    timer = setInterval(() => {
+      timeNow--;
+      document.getElementById('time').textContent = timeNow;
+      if(timeNow <= 0) { clearInterval(timer); checkAnswer(true); }
+    }, 1000);
+  }
+
+  function checkAnswer(timeout = false) {
+    clearInterval(timer);
+    const userAns = parseFloat(document.getElementById('answer').value);
+    if (!timeout && userAns === correctAnswer) {
+      score += 10;
+    }
+    document.getElementById('score').textContent = score;
+    setTimeout(() => nextQuestion(), 500);
+  }
+
+  function endGame() {
+    document.getElementById('finalScore').textContent = score;
+    showScreen('result');
+  }
+</script>
+</body>
+</html>
