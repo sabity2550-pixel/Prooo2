@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ติดต่อเรา | HomeReno</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style> body { font-family: 'Prompt', sans-serif; } </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-950 text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="text-2xl font-bold tracking-tight"><a href="index.html">Home<span class="text-blue-400">Reno</span>.</a></div>
+                <div class="hidden md:flex space-x-8 font-medium">
+                    <a href="index.html" class="hover:text-blue-400 transition-colors">หน้าแรก</a>
+                    <a href="services.html" class="hover:text-blue-400 transition-colors">บริการ</a>
+                    <a href="portfolio.html" class="hover:text-blue-400 transition-colors">ผลงาน</a>
+                    <a href="contact.html" class="text-blue-400 border-b-2 border-blue-400 pb-1">ติดต่อเรา</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Content (ดึงฟอร์มส่งข้อมูลและช่องทางติดต่อหลักมาไว้ตรงนี้ทั้งหมด) -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div data-aos="fade-right">
+                <h1 class="text-4xl font-bold text-gray-900 mb-6">ปรึกษาปัญหาบ้านกับเราฟรี!</h1>
+                <p class="text-gray-600 text-lg mb-10">ยินดีนัดหมายเพื่อเข้าประเมินราคาหน้างาน ฟรี! ทั้งในเขตกรุงเทพฯ และปริมณฑล</p>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4">
+                        <span class="bg-blue-100 p-4 rounded-xl text-2xl">📞</span>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">เบอร์โทรศัพท์สายด่วน</p>
+                            <p class="text-lg font-bold text-blue-950">081-234-5678</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="bg-green-100 p-4 rounded-xl text-2xl">💬</span>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Line Official Account</p>
+                            <p class="text-lg font-bold text-green-600">@homereno</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ฟอร์มของคุณเดิม (ยังคงใช้ระบบส่งฟอร์มของเดิมได้สมบูรณ์) -->
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 text-gray-800" data-aos="fade-left">
+                <h3 class="text-xl font-bold mb-6 text-gray-900">กรอกข้อมูลเพื่อให้วิศวกรติดต่อกลับ</h3>
+                <form action="https://formspree.io/f/xrewkbvl" method="POST" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">ชื่อ-นามสกุล ของคุณ</label>
+                        <input type="text" name="name" required class="w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all" placeholder="กรอกชื่อของคุณ">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">เบอร์โทรศัพท์</label>
+                        <input type="tel" name="phone" required class="w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all" placeholder="กรอกเบอร์โทรศัพท์">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">รายละเอียดงานหรือพื้นที่หน้างาน</label>
+                        <textarea name="message" rows="3" required class="w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all" placeholder="เช่น ต่อเติมห้องครัวแถวบางนา, ทำห้องน้ำใหม่"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg transition duration-300 shadow-lg">ส่งข้อมูลประเมินราคาฟรี</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-950 text-gray-400 py-8 text-center text-sm">
+        <p>© 2026 HomeReno Co., Ltd. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ duration: 800, once: true });</script>
+</body>
+</html>
